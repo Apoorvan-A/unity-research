@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Navigation } from "@/components/ui/navigation";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ResearchCard, ResearchItem } from "@/components/research/research-card";
 import { 
   Plus, 
   Search, 
@@ -26,51 +25,6 @@ const recentActivity = [
   { id: 1, type: "collaboration", message: "Dr. Smith invited you to collaborate on 'AI in Healthcare'", time: "2 hours ago" },
   { id: 2, type: "comment", message: "New comment on your paper 'Machine Learning Applications'", time: "4 hours ago" },
   { id: 3, type: "milestone", message: "Project 'Climate Data Analysis' reached 75% completion", time: "1 day ago" },
-];
-
-const sampleResearchItems: ResearchItem[] = [
-  {
-    id: "1",
-    title: "Machine Learning Applications in Healthcare Diagnostics",
-    description: "A comprehensive study examining the effectiveness of neural networks in medical image analysis and patient diagnosis prediction.",
-    type: "paper",
-    authors: [
-      { name: "Dr. Sarah Chen", avatar: "", affiliation: "Stanford University" },
-      { name: "Prof. Michael Rodriguez", avatar: "", affiliation: "MIT" }
-    ],
-    tags: ["machine learning", "healthcare", "diagnostics", "neural networks"],
-    createdAt: "2024-01-15",
-    status: "completed",
-    metrics: { views: 1847, downloads: 234, citations: 12, likes: 89, comments: 15 }
-  },
-  {
-    id: "2", 
-    title: "Climate Change Impact Dataset - Global Temperature Records 1880-2024",
-    description: "Comprehensive temperature measurement data from weather stations worldwide, processed and cleaned for research applications.",
-    type: "dataset",
-    authors: [
-      { name: "Dr. Emily Watson", avatar: "", affiliation: "NASA" },
-      { name: "Dr. James Lee", avatar: "", affiliation: "NOAA" }
-    ],
-    tags: ["climate change", "temperature", "global warming", "environmental data"],
-    createdAt: "2024-02-10", 
-    metrics: { views: 956, downloads: 145, likes: 67, comments: 8 }
-  },
-  {
-    id: "3",
-    title: "AI-Powered Drug Discovery Platform",
-    description: "Collaborative project developing machine learning models to accelerate pharmaceutical research and reduce drug development costs.",
-    type: "project",
-    authors: [
-      { name: "Dr. Alex Thompson", avatar: "", affiliation: "Harvard Medical School" },
-      { name: "Prof. Lisa Chang", avatar: "", affiliation: "UC Berkeley" }
-    ],
-    tags: ["artificial intelligence", "drug discovery", "pharmaceuticals", "bioinformatics"],
-    createdAt: "2024-01-08",
-    status: "active",
-    collaborators: 8,
-    metrics: { views: 623, likes: 45, comments: 23 }
-  }
 ];
 
 export default function Dashboard() {
@@ -151,9 +105,14 @@ export default function Dashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {sampleResearchItems.slice(0, 2).map((item) => (
-                        <ResearchCard key={item.id} item={item} compact showActions={false} />
-                      ))}
+                      <div className="p-4 bg-muted/30 rounded-lg">
+                        <p className="text-sm font-medium">New Paper: Machine Learning Applications</p>
+                        <p className="text-xs text-muted-foreground mt-1">Published by Dr. Sarah Chen • 2 days ago</p>
+                      </div>
+                      <div className="p-4 bg-muted/30 rounded-lg">
+                        <p className="text-sm font-medium">Dataset Update: Climate Change Impact</p>
+                        <p className="text-xs text-muted-foreground mt-1">Updated by Dr. Emily Watson • 1 week ago</p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -180,11 +139,35 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {sampleResearchItems
-                    .filter(item => item.type === "project")
-                    .map((item) => (
-                      <ResearchCard key={item.id} item={item} />
-                    ))}
+                  <Card className="bg-gradient-card hover:shadow-card transition-all duration-300">
+                    <CardHeader>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <FolderOpen className="h-5 w-5 text-primary" />
+                        <Badge variant="outline" className="text-xs">project</Badge>
+                        <Badge className="text-xs bg-accent text-accent-foreground">active</Badge>
+                      </div>
+                      <CardTitle className="text-base">AI-Powered Drug Discovery Platform</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Collaborative project developing machine learning models to accelerate pharmaceutical research.
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge variant="secondary" className="text-xs">AI</Badge>
+                        <Badge variant="secondary" className="text-xs">pharmaceuticals</Badge>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <div className="flex items-center">
+                          <Users className="h-3 w-3 mr-1" />
+                          8 collaborators
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          Jan 8, 2024
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </TabsContent>
 
@@ -198,11 +181,32 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {sampleResearchItems
-                    .filter(item => item.type === "paper")
-                    .map((item) => (
-                      <ResearchCard key={item.id} item={item} />
-                    ))}
+                  <Card className="bg-gradient-card hover:shadow-card transition-all duration-300">
+                    <CardHeader>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <FileText className="h-5 w-5 text-primary" />
+                        <Badge variant="outline" className="text-xs">paper</Badge>
+                        <Badge className="text-xs bg-primary text-primary-foreground">completed</Badge>
+                      </div>
+                      <CardTitle className="text-base">Machine Learning Applications in Healthcare</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        A comprehensive study examining the effectiveness of neural networks in medical image analysis.
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge variant="secondary" className="text-xs">machine learning</Badge>
+                        <Badge variant="secondary" className="text-xs">healthcare</Badge>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>1847 views • 234 downloads</span>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          Jan 15, 2024
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </TabsContent>
 
@@ -216,11 +220,31 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {sampleResearchItems
-                    .filter(item => item.type === "dataset")
-                    .map((item) => (
-                      <ResearchCard key={item.id} item={item} />
-                    ))}
+                  <Card className="bg-gradient-card hover:shadow-card transition-all duration-300">
+                    <CardHeader>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Database className="h-5 w-5 text-primary" />
+                        <Badge variant="outline" className="text-xs">dataset</Badge>
+                      </div>
+                      <CardTitle className="text-base">Climate Change Impact Dataset</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Global temperature records from 1880-2024, processed and cleaned for research applications.
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge variant="secondary" className="text-xs">climate change</Badge>
+                        <Badge variant="secondary" className="text-xs">temperature</Badge>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>956 views • 145 downloads</span>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          Feb 10, 2024
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </TabsContent>
             </Tabs>
